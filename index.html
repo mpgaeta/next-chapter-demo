@@ -5,7 +5,7 @@
 <dialog id="editor"><form id="bookForm"><h2 id="formTitle">Add book</h2><input type="hidden" name="id"><label>Book title<input name="title" required maxlength="160"></label><label>Author<input name="author" required maxlength="120"></label><label>Status<select name="status"><option value="want">To Read</option><option value="read">Read</option></select></label><label>Genre<select name="genre"><option>Mystery / Thriller</option><option>Historical Fiction</option><option>Nonfiction / History</option><option>Biography</option><option>Adventure</option><option>Other</option></select></label><label>Rating<select name="rating"><option value="0">Not rated</option><option value="1">★ 1</option><option value="2">★★ 2</option><option value="3">★★★ 3</option><option value="4">★★★★ 4</option><option value="5">★★★★★ 5</option></select></label><label>Notes<textarea name="notes" maxlength="1000"></textarea></label><div class="actions"><button type="submit" class="primary">Save book</button><button type="button" class="secondary" id="cancel">Cancel</button></div></form></dialog>
 <style>
 @media (max-width: 700px) {
-  .tabs {
+  #tabs {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -17,7 +17,7 @@
     padding: 12px 6px calc(12px + env(safe-area-inset-bottom));
     box-shadow: 0 -2px 10px rgba(0,0,0,0.12);
   }
-  .tabs button {
+  #tabs button {
     flex: 1;
     min-width: 0;
     font-size: 12px;
