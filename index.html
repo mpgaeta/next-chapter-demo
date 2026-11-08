@@ -3,7 +3,31 @@
 :root{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#19384a;background:#f4f7f9}*{box-sizing:border-box}body{margin:0}header{background:#19384a;color:white;padding:22px 18px 16px}header h1{margin:0;font-size:26px}header p{margin:6px 0 0;color:#d7e6ed;font-size:13px}.wrap{max-width:760px;margin:auto;padding:16px}nav{display:flex;gap:6px;overflow:auto;margin-bottom:14px}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-size:15px;font-weight:600}nav button{white-space:nowrap;background:#e3ebf0;color:#19384a}nav button.active{background:#19384a;color:white}.panel{background:white;border:1px solid #e0e7ec;border-radius:14px;padding:16px;margin-bottom:14px}.heading{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}h2{font-size:20px;margin:0 0 10px}h3{font-size:16px;margin:0 0 6px}p{line-height:1.45}.muted{color:#617582;font-size:13px}.primary{background:#247e89;color:white}.secondary{background:#e8f1f4;color:#19384a}.danger{color:#a83d3d;background:#fff1f1}.book{padding:13px 0;border-top:1px solid #e8edf0}.book:first-of-type{border-top:0}.book .meta{font-size:13px;color:#647987;margin:4px 0 8px}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{padding:7px 10px;font-size:13px}.stars{color:#d49120}input,select,textarea{display:block;width:100%;padding:11px;border:1px solid #bccbd3;border-radius:9px;font:inherit;margin:5px 0 13px}label{font-weight:600;font-size:14px}textarea{min-height:75px}dialog{width:min(95vw,520px);border:0;border-radius:14px;padding:20px;box-shadow:0 15px 55px #0004}dialog::backdrop{background:#0008}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{display:inline-block;background:#e9f2f5;border-radius:10px;padding:10px 14px;margin:0 7px 10px 0;font-weight:700}.notice{font-size:13px;background:#fff6dc;padding:12px;border-radius:10px;margin-bottom:14px}a{color:#176b88}@media(max-width:480px){.two{grid-template-columns:1fr}}
 </style></head><body><header><div style="max-width:760px;margin:auto"><h1>📚 Next Chapter</h1><p>Interactive demo · No sign-in required</p></div></header><main class="wrap"><div class="notice">This is a demo with sample books. Your changes stay in this browser on this device. They are not shared with other testers or the app creator.</div><nav id="tabs" aria-label="Book sections"><button data-tab="read">Read</button><button data-tab="want">To Read</button><button data-tab="authors">Authors</button><button data-tab="recommend">Recommendations</button></nav><div class="panel"><div class="heading"><div id="counts"></div><button class="primary" id="add">+ Add book</button></div></div><section id="content" class="panel"></section><p class="muted" style="text-align:center">Next Chapter Demo · Sample data only · No account or email needed</p></main>
 <dialog id="editor"><form id="bookForm"><h2 id="formTitle">Add book</h2><input type="hidden" name="id"><label>Book title<input name="title" required maxlength="160"></label><label>Author<input name="author" required maxlength="120"></label><label>Status<select name="status"><option value="want">To Read</option><option value="read">Read</option></select></label><label>Genre<select name="genre"><option>Mystery / Thriller</option><option>Historical Fiction</option><option>Nonfiction / History</option><option>Biography</option><option>Adventure</option><option>Other</option></select></label><label>Rating<select name="rating"><option value="0">Not rated</option><option value="1">★ 1</option><option value="2">★★ 2</option><option value="3">★★★ 3</option><option value="4">★★★★ 4</option><option value="5">★★★★★ 5</option></select></label><label>Notes<textarea name="notes" maxlength="1000"></textarea></label><div class="actions"><button type="submit" class="primary">Save book</button><button type="button" class="secondary" id="cancel">Cancel</button></div></form></dialog>
-<script>
+<style>
+@media (max-width: 700px) {
+  .tabs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 12px 6px calc(12px + env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.12);
+  }
+  .tabs button {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    padding: 10px 2px;
+  }
+  body {
+    padding-bottom: 100px;
+  }
+}
+</style>3  <script>
 'use strict';
 const KEY='next-chapter-demo-v1';
 const samples=[{id:1,title:'The Lincoln Lawyer',author:'Michael Connelly',status:'read',genre:'Mystery / Thriller',rating:5,notes:'Sample rating'},{id:2,title:'A Time to Kill',author:'John Grisham',status:'read',genre:'Mystery / Thriller',rating:4,notes:''},{id:3,title:'Killing Floor',author:'Lee Child',status:'read',genre:'Mystery / Thriller',rating:5,notes:''},{id:4,title:'The Nightingale',author:'Kristin Hannah',status:'want',genre:'Historical Fiction',rating:0,notes:''},{id:5,title:'The Boys in the Boat',author:'Daniel James Brown',status:'want',genre:'Nonfiction / History',rating:0,notes:''},{id:6,title:'Open Season',author:'C. J. Box',status:'want',genre:'Mystery / Thriller',rating:0,notes:''}];
